@@ -1,6 +1,6 @@
 function displayData(major) {
     $.ajax({
-        url: 'cit5students.json',
+        url: 'https://github.com/l27374/Javascript1/blob/main/cit5students.json',
         type: 'GET',
         dataType: 'json',
         success: function (data) {
