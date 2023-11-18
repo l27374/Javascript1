@@ -8,6 +8,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
 </head>
 <body>
+
+<script id="table-template" type="text/x-handlebars-template">
     <table border="1">
         <thead>
             <tr>
@@ -29,16 +31,20 @@
 </script>
 
 <div id="student-table"></div>
+
 <script>
     $(document).ready(function () {
         $.ajax({
-            url: 'cit5students.json',
+            url: 'path/to/cit5students.json',
             type: 'GET',
             dataType: 'json',
             success: function (data) {
                 var students = data.students;
+
                 var source = $('#table-template').html();
+
                 var template = Handlebars.compile(source);
+
                 $('#student-table').html(template({ students: students }));
             },
             error: function (error) {
@@ -47,6 +53,6 @@
         });
     });
 </script>
-
 </body>
 </html>
+
