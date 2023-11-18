@@ -22,7 +22,7 @@
     });
 
     function displayStudentsByMajor(major) {
-      fetch('cit5students.json')
+      fetch('https://l27374.github.io/Javascript1/cit5students.json')
         .then(response => response.json())
         .then(data => {
           const students = data.filter(student => student.major === major);
