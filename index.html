@@ -6,71 +6,32 @@
     <title>Student Information</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+    <script src="script.js"></script>
 </head>
 <body>
+
+<div>
+    <button onclick="displayData('CIT')">CIT Majors</button>
+    <button onclick="displayData('BUS')">Business Majors</button>
+</div>
+<div id="data-container"></div>
 <script id="table-template" type="text/x-handlebars-template">
     <table border="1">
-        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Major</th>
+            <th>Midterm Score</th>
+            <th>Final Exam Score</th>
+        </tr>
+        {{#each students}}
             <tr>
-                <th>Name</th>
-                <th>Major</th>
-                <th>Midterm Score</th>
-                <th>Final Exam Score</th>
+                <td>{{name}}</td>
+                <td>{{major}}</td>
+                <td>{{midterm}}</td>
+                <td>{{final}}</td>
             </tr>
-        </thead>
-        <tbody>
-            {{#each students}}
-                <tr>
-                    <td>{{name}}</td>
-                    <td>{{major}}</td>
-                    <td>{{midterm}}</td>
-                    <td>{{final}}</td>
-                </tr>
-            {{/each}}
-        </tbody>
+        {{/each}}
     </table>
-</script>
-<div>
-    <button onclick="filterByMajor('CIT')">CIT Majors</button>
-    <button onclick="filterByMajor('BUS')">Business Majors</button>
-</div>
-<div id="student-table"></div>
-<script>
-    var allStudents; 
-    function filterByMajor(major) {
-        var filteredStudents = allStudents.filter(function (student) {
-            return student.major === major;
-        });
-
-        var source = $('#table-template').html();
-
-        var template = Handlebars.compile(source);
-
-        $('#student-table').html(template({ students: filteredStudents }));
-    }
-
-    $(document).ready(function () {
-        
-        $.ajax({
-            url: 'cit5students.json',
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                
-                allStudents = data;
-
-                var source = $('#table-template').html();
-
-                var template = Handlebars.compile(source);
-
-                $('#student-table').html(template({ students: allStudents }));
-            },
-            error: function (error) {
-                console.error('Error fetching JSON data: ', error);
-            }
-        });
-    });
 </script>
 </body>
 </html>
-
