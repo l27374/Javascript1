@@ -6,21 +6,19 @@
   <title>CIT and Business Majors</title>
 </head>
 <body>
+  <h3>Select a Major</h3>
+  <br>
   <button id="citButton">CIT Majors</button>
   <button id="businessButton">Business Majors</button>
-
   <div id="result"></div>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
   <script>
     document.getElementById('citButton').addEventListener('click', function() {
       displayStudentsByMajor('CIT');
     });
-
     document.getElementById('businessButton').addEventListener('click', function() {
       displayStudentsByMajor('BUS');
     });
-
     function displayStudentsByMajor(major) {
       fetch('https://l27374.github.io/Javascript1/cit5students.json')
         .then(response => response.json())
@@ -33,7 +31,6 @@
         });
     }
   </script>
-
   <script id="students-template" type="text/x-handlebars-template">
     <table>
       <thead>
