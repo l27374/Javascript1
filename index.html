@@ -1,38 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Information</title>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
-    <script src="script.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIT and Business Majors</title>
 </head>
 <body>
-<h2>Select a Major</h2>
-    <br>
-    <div>
-    <button onclick="displayData('CIT')">CIT Majors</button>
-    <button onclick="displayData('BUS')">Business Majors</button>
-</div>
-<div id="data-container"></div>
-<script id="table-template" type="text/x-handlebars-template">
-    <table border="1">
+  <button id="citButton">CIT Majors</button>
+  <button id="businessButton">Business Majors</button>
+
+  <div id="result"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+  <script>
+    document.getElementById('citButton').addEventListener('click', function() {
+      displayStudentsByMajor('CIT');
+    });
+
+    document.getElementById('businessButton').addEventListener('click', function() {
+      displayStudentsByMajor('BUS');
+    });
+
+    function displayStudentsByMajor(major) {
+      fetch('cit5students.json')
+        .then(response => response.json())
+        .then(data => {
+          const students = data.filter(student => student.major === major);
+          const templateSource = document.getElementById('students-template').innerHTML;
+          const template = Handlebars.compile(templateSource);
+          const html = template({ students: students });
+          document.getElementById('result').innerHTML = html;
+        });
+    }
+  </script>
+
+  <script id="students-template" type="text/x-handlebars-template">
+    <table>
+      <thead>
         <tr>
-            <th>Name</th>
-            <th>Major</th>
-            <th>Midterm Score</th>
-            <th>Final Exam Score</th>
+          <th>Name</th>
+          <th>Major</th>
+          <th>Midterm Score</th>
+          <th>Final Exam Score</th>
         </tr>
+      </thead>
+      <tbody>
         {{#each students}}
-            <tr>
-                <td>{{name}}</td>
-                <td>{{major}}</td>
-                <td>{{midterm}}</td>
-                <td>{{final}}</td>
-            </tr>
+        <tr>
+          <td>{{name}}</td>
+          <td>{{major}}</td>
+          <td>{{midterm}}</td>
+          <td>{{final}}</td>
+        </tr>
         {{/each}}
+      </tbody>
     </table>
-</script>
+  </script>
 </body>
 </html>
